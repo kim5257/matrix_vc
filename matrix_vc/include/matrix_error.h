@@ -66,7 +66,7 @@ bool		ErrMsg::setErrString		(	const char		string[]	///< 에러 메시지
 
 	do
 	{
-		int		length		=	strnlen(string, MAX_ERR_STRING_LEN);
+		size_t	length		=	strnlen(string, MAX_ERR_STRING_LEN);
 		if( length == 0 )
 		{
 			break;

@@ -51,9 +51,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixB.setElem(3,3,1);
 
 		printf("A = \n");
-		for(size_t col=0;col<matrixA.getCol();col++)
+		for(matrix::col_t col=0;col<matrixA.getCol();col++)
 		{
-			for(size_t row=0;row<matrixA.getRow();row++)
+			for(matrix::row_t row=0;row<matrixA.getRow();row++)
 			{
 				printf("%6.2f ", matrixA.getElem(col, row));
 			}
@@ -61,9 +61,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 		printf("B = \n");
-		for(size_t col=0;col<matrixB.getCol();col++)
+		for(matrix::col_t col=0;col<matrixB.getCol();col++)
 		{
-			for(size_t row=0;row<matrixB.getRow();row++)
+			for(matrix::row_t row=0;row<matrixB.getRow();row++)
 			{
 				printf("%6.2f ", matrixB.getElem(col, row));
 			}
@@ -73,9 +73,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixC	=	matrixA + matrixB;
 
 		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
@@ -85,9 +85,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixC	=	matrixA - matrixB;
 
 		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
@@ -97,9 +97,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixC	=	matrixA.multiply(matrixB);
 
 		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
@@ -109,9 +109,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixC	=	matrixA.multiply(2);
 
 		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
@@ -121,9 +121,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixC	=	matrixA.tmultiply(matrixB);
 
 		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}

@@ -39,24 +39,24 @@ public:
 		THREAD_RETURN_TYPE		retVal;
 	};
 private:
-	size_t			mCol;		///< 행 크기
-	size_t			mRow;		///< 열 크기
+	col_t			mCol;		///< 행 크기
+	row_t			mRow;		///< 열 크기
 	vector_data_t*	mData;		///< 행렬 데이터
 public:
 				SparseMatrix		(	void	);
-				SparseMatrix		(	size_t		col,
-										size_t		row
+				SparseMatrix		(	col_t		col,
+										row_t		row
 									);
 				SparseMatrix		(	const SparseMatrix&		matrix		);
 	virtual		~SparseMatrix		(	void	);
 public:
-	elem_t		getElem		(	size_t				col,
-									size_t				row
-								) const;
-	void		setElem		(	size_t				col,
-									size_t				row,
-									elem_t				elem
-								);
+	elem_t		getElem		(	col_t				col,
+								row_t				row
+							) const;
+	void		setElem		(	col_t				col,
+								row_t				row,
+								elem_t				elem
+							);
 	SparseMatrix	add			(	const SparseMatrix&	operand	) const;
 	SparseMatrix	padd		(	const SparseMatrix&	operand	) const;
 	SparseMatrix	sub			(	const SparseMatrix&	operand	) const;
@@ -81,19 +81,19 @@ public:
 	inline bool	operator==		(	const SparseMatrix&	operand	) const;
 public:
 	inline bool	isValid		(	void	);
-	inline size_t	getCol			(	void	) const;
-	inline size_t	getRow			(	void	) const;
+	inline col_t	getCol			(	void	) const;
+	inline row_t	getRow			(	void	) const;
 	inline size_t	getSize		(	void	) const;
 private:
-	void		allocElems		(	size_t		col,
-									size_t		row
+	void		allocElems		(	col_t		col,
+									row_t		row
 								);
 	void		freeElems		(	void	);
 	void		copyElems		(	const SparseMatrix&		matrix		);
 	void		pcopyElems		(	const SparseMatrix&		matrix		);
 	void		chkSameSize	(	const SparseMatrix&		matrix		) const;
-	void		chkBound		(	size_t		col,
-									size_t		row
+	void		chkBound		(	col_t		col,
+									row_t		row
 								) const;
 	void		doThreadFunc	(	FuncKind		kind,
 									OpInfo&		info
@@ -112,18 +112,18 @@ private:
 	static THREAD_RETURN_TYPE THREAD_FUNC_TYPE	threadCompare		(	void*	pData	);
 private:
 	static void		delElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row
-										);
-	static elem_t		getElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row
-										);
+										col_t			col,
+										row_t			row
+									);
+	static elem_t	getElem_		(	vector_data_t*	data,
+										col_t			col,
+										row_t			row
+									);
 	static void		setElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row,
-											elem_t				elem
-										);
+										col_t			col,
+										row_t			row,
+										elem_t			elem
+									);
 };
 
 /**
@@ -207,7 +207,7 @@ bool	SparseMatrix::isValid		(	void	)
  * 행 크기 가져오기
  * @return		행 크기
  */
-size_t	SparseMatrix::getCol		(	void	) const
+col_t	SparseMatrix::getCol		(	void	) const
 {
 	return	mCol;
 }
@@ -216,7 +216,7 @@ size_t	SparseMatrix::getCol		(	void	) const
  * 열 크기 가져오기
  * @return		열 크기
  */
-size_t	SparseMatrix::getRow		(	void	) const
+row_t	SparseMatrix::getRow		(	void	) const
 {
 	return	mRow;
 }

@@ -46,33 +46,26 @@ private:
 
 public:
 				MatrixCSR		(	void	);
-				MatrixCSR		(	size_t		col,
-									size_t		row
+				MatrixCSR		(	col_t		col,
+									row_t		row
 								);
 				MatrixCSR		(	const MatrixCSR&		matrix		);
-	virtual	~MatrixCSR		(	void	);
+	virtual		~MatrixCSR		(	void	);
 public:
-	elem_t		getElem		(	size_t				col,
-									size_t				row
+	elem_t		getElem		(	col_t				col,
+									row_t				row
 								) const;
-	void		setElem		(	size_t				col,
-									size_t				row,
-									elem_t				elem
-								);
+	void		setElem		(	col_t				col,
+								row_t				row,
+								elem_t				elem
+							);
 	MatrixCSR	add			(	const MatrixCSR&	operand	) const;
-	MatrixCSR	padd		(	const MatrixCSR&	operand	) const;
 	MatrixCSR	sub			(	const MatrixCSR&	operand	) const;
-	MatrixCSR	psub		(	const MatrixCSR&	operand	) const;
 	MatrixCSR	multiply	(	const MatrixCSR&	operand	) const;
-	MatrixCSR	pmultiply	(	const MatrixCSR&	operand	) const;
 	MatrixCSR	multiply	(	elem_t		operand	) const;
-	MatrixCSR	pmultiply	(	elem_t		operand	) const;
 	MatrixCSR	tmultiply	(	const MatrixCSR&	operand	) const;
-	MatrixCSR	ptmultiply	(	const MatrixCSR&	operand	) const;
 	const MatrixCSR&		equal		(	const MatrixCSR&	operand	);
-	const MatrixCSR&		pequal		(	const MatrixCSR&	operand	);
 	bool			compare	(	const MatrixCSR&	operand	) const;
-	bool			pcompare	(	const MatrixCSR&	operand	) const;
 	MatrixCSR	solution	(	const MatrixCSR&	operand	);
 public:
 	inline MatrixCSR		operator+		(	const MatrixCSR&	operand	) const;
@@ -83,49 +76,19 @@ public:
 	inline bool	operator==		(	const MatrixCSR&	operand	) const;
 public:
 	inline bool	isValid		(	void	);
-	inline size_t	getCol			(	void	) const;
-	inline size_t	getRow			(	void	) const;
+	inline col_t	getCol		(	void	) const;
+	inline row_t	getRow		(	void	) const;
 	inline size_t	getSize		(	void	) const;
 private:
-	void		allocElems		(	size_t		col,
-									size_t		row
+	void		allocElems		(	col_t	col,
+									row_t	row
 								);
 	void		freeElems		(	void	);
 	void		copyElems		(	const MatrixCSR&		matrix		);
-	void		pcopyElems		(	const MatrixCSR&		matrix		);
 	void		chkSameSize	(	const MatrixCSR&		matrix		) const;
-	void		chkBound		(	size_t		col,
-									size_t		row
+	void		chkBound		(	col_t		col,
+									row_t		row
 								) const;
-	void		doThreadFunc	(	FuncKind		kind,
-									OpInfo&		info
-								) const;
-	void		doThreadFunc	(	FuncKind		kind,
-									OpInfo&		info
-								);
-private:
-	static void*	threadFunc			(	void*	pData	);
-	static void*	threadAdd			(	void*	pData	);
-	static void*	threadSub			(	void*	pData	);
-	static void*	threadMultiply	(	void*	pData	);
-	static void*	threadElemMul		(	void*	pData	);
-	static void*	threadTmultiply	(	void*	pData	);
-	static void*	threadCopy			(	void*	pData	);
-	static void*	threadCompare		(	void*	pData	);
-private:
-	static void		delElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row
-										);
-	static elem_t		getElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row
-										);
-	static void		setElem_		(	vector_data_t*	data,
-											size_t				col,
-											size_t				row,
-											elem_t				elem
-										);
 };
 
 /**
@@ -209,7 +172,7 @@ bool	MatrixCSR::isValid		(	void	)
  * 행 크기 가져오기
  * @return		행 크기
  */
-size_t	MatrixCSR::getCol		(	void	) const
+col_t	MatrixCSR::getCol		(	void	) const
 {
 	return	mCol;
 }
@@ -218,7 +181,7 @@ size_t	MatrixCSR::getCol		(	void	) const
  * 열 크기 가져오기
  * @return		열 크기
  */
-size_t	MatrixCSR::getRow		(	void	) const
+row_t	MatrixCSR::getRow		(	void	) const
 {
 	return	mRow;
 }

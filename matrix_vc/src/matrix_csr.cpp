@@ -38,8 +38,8 @@ mColStart(NULL)
 /**
  * 생성자
  */
-MatrixCSR::MatrixCSR			(	size_t		col,	///< 행 크기
-									size_t		row		///< 열 크기
+MatrixCSR::MatrixCSR			(	col_t		col,	///< 행 크기
+									row_t		row		///< 열 크기
 								)
 :mCol(0),
 mRow(0),
@@ -73,9 +73,9 @@ MatrixCSR::~MatrixCSR		(	void	)
  * 행렬 요소 값 참조
  * @return		참조한 행렬 요소 값
  */
-elem_t		MatrixCSR::getElem		(	size_t		col,	///< 참조 할 행 위치
-											size_t		row		///< 참조 할 열 위치
-										) const
+elem_t		MatrixCSR::getElem		(	col_t		col,	///< 참조 할 행 위치
+										row_t		row		///< 참조 할 열 위치
+									) const
 {
 	chkBound(col, row);
 
@@ -98,18 +98,18 @@ elem_t		MatrixCSR::getElem		(	size_t		col,	///< 참조 할 행 위치
 /**
  * 행렬 요소 값 설정
  */
-void		MatrixCSR::setElem		(	size_t		col,	///< 설정 할 행 위치
-											size_t		row,	///< 설정 할 열 위치
-											elem_t		elem	///< 설정 할 요소 값
-										)
+void		MatrixCSR::setElem		(	col_t		col,	///< 설정 할 행 위치
+										row_t		row,	///< 설정 할 열 위치
+										elem_t		elem	///< 설정 할 요소 값
+									)
 {
 	chkBound(col, row);
 
 	bool	found	=	false;
-	size_t	start	=	mColStart[col];
-	size_t	end		=	mColStart[col+1];
+	col_t	start	=	mColStart[col];
+	col_t	end		=	mColStart[col+1];
 
-	for(size_t cnt=start;cnt<end;cnt++)
+	for(col_t cnt=start;cnt<end;cnt++)
 	{
 		if( mData[cnt].mRow == row )
 		{
@@ -144,23 +144,23 @@ MatrixCSR		MatrixCSR::add		(	const MatrixCSR&	operand	///< 피연산자
 
 	result.mData.reserve(mData.size());
 
-	for(size_t col=0;col<getCol();++col)
+	for(col_t col=0;col<getCol();++col)
 	{
-		size_t		start	=	mColStart[col];
-		size_t		end		=	mColStart[col+1];
+		row_t	start	=	mColStart[col];
+		row_t	end		=	mColStart[col+1];
 
-		for(size_t cnt=start;cnt<end;++cnt)
+		for(row_t cnt=start;cnt<end;++cnt)
 		{
 			result.setElem	(	col,
-									mData[cnt].mRow,
-									mData[cnt].mData
-								);
+								mData[cnt].mRow,
+								mData[cnt].mData
+							);
 		}
 
 		start	=	operand.mColStart[col];
 		end		=	operand.mColStart[col+1];
 
-		for(size_t cnt=start;cnt<end;++cnt)
+		for(row_t cnt=start;cnt<end;++cnt)
 		{
 			result.setElem	(	col,
 									vec[cnt].mRow,
@@ -177,7 +177,7 @@ MatrixCSR		MatrixCSR::add		(	const MatrixCSR&	operand	///< 피연산자
  * @return		행렬 뺄셈 결과
  */
 MatrixCSR		MatrixCSR::sub		(	const MatrixCSR&	operand	///< 피연산자
-										) const
+									) const
 {
 	chkSameSize(operand);
 
@@ -186,23 +186,23 @@ MatrixCSR		MatrixCSR::sub		(	const MatrixCSR&	operand	///< 피연산자
 
 	result.mData.reserve(mData.size());
 
-	for(size_t col=0;col<getCol();++col)
+	for(col_t col=0;col<getCol();++col)
 	{
-		size_t		start	=	mColStart[col];
-		size_t		end		=	mColStart[col+1];
+		row_t		start	=	mColStart[col];
+		row_t		end		=	mColStart[col+1];
 
-		for(size_t cnt=start;cnt<end;++cnt)
+		for(row_t cnt=start;cnt<end;++cnt)
 		{
 			result.setElem	(	col,
-									mData[cnt].mRow,
-									mData[cnt].mData
-								);
+								mData[cnt].mRow,
+								mData[cnt].mData
+							);
 		}
 
 		start	=	operand.mColStart[col];
 		end		=	operand.mColStart[col+1];
 
-		for(size_t cnt=start;cnt<end;++cnt)
+		for(row_t cnt=start;cnt<end;++cnt)
 		{
 			result.setElem	(	col,
 									vec[cnt].mRow,
@@ -230,22 +230,22 @@ MatrixCSR		MatrixCSR::multiply	(	const MatrixCSR&	operand	///< 피연산자
 	MatrixCSR				result		=	MatrixCSR(getCol(), operand.getRow());
 	const elem_vector_t&	vec			=	operand.mData;
 
-	for(size_t col=0;col<getCol();++col)
+	for(col_t col=0;col<getCol();++col)
 	{
-		size_t		start	=	mColStart[col];
-		size_t		end		=	mColStart[col+1];
+		row_t	start	=	mColStart[col];
+		row_t	end		=	mColStart[col+1];
 
-		for(size_t cnt=start;cnt<end;++cnt)
+		for(row_t cnt=start;cnt<end;++cnt)
 		{
-			size_t		start2	=	operand.mColStart[mData[cnt].mRow];
-			size_t		end2	=	operand.mColStart[mData[cnt].mRow+1];
+			row_t	start2	=	operand.mColStart[mData[cnt].mRow];
+			row_t	end2	=	operand.mColStart[mData[cnt].mRow+1];
 
-			for(size_t cnt2=start2;cnt2<end2;++cnt2)
+			for(row_t cnt2=start2;cnt2<end2;++cnt2)
 			{
 				result.setElem	(	col,
-										vec[cnt2].mRow,
-										result.getElem(col, vec[cnt2].mRow) + (mData[cnt].mData * vec[cnt2].mData)
-									);
+									vec[cnt2].mRow,
+									result.getElem(col, vec[cnt2].mRow) + (mData[cnt].mData * vec[cnt2].mData)
+								);
 			}
 		}
 	}
@@ -263,12 +263,12 @@ MatrixCSR		MatrixCSR::multiply	(	elem_t		operand	///< 피연산자
 {
 	MatrixCSR	result				=	MatrixCSR(getCol(), getRow());
 
-	for(size_t col=0;col<getCol();++col)
+	for(col_t col=0;col<getCol();++col)
 	{
-		size_t		start	=	mColStart[col];
-		size_t		end		=	mColStart[col+1];
+		row_t		start	=	mColStart[col];
+		row_t		end		=	mColStart[col+1];
 
-		for(size_t cnt=start;cnt!=end;++cnt)
+		for(row_t cnt=start;cnt!=end;++cnt)
 		{
 			result.setElem	(	col,
 									mData[cnt].mRow,
@@ -296,17 +296,17 @@ MatrixCSR		MatrixCSR::tmultiply		(	const MatrixCSR&	operand	///< 피연산자
 	MatrixCSR				result		=	MatrixCSR(getCol(), operand.getRow());
 	const elem_vector_t&	vec			=	operand.mData;
 
-	for(size_t col=0;col<getCol();++col)
+	for(col_t col=0;col<getCol();++col)
 	{
-		size_t		start	=	mColStart[col];
-		size_t		end		=	mColStart[col+1];
+		row_t		start	=	mColStart[col];
+		row_t		end		=	mColStart[col+1];
 
-		for(size_t cnt=start;cnt!=end;++cnt)
+		for(row_t cnt=start;cnt!=end;++cnt)
 		{
-			size_t		start2	=	operand.mColStart[col];
-			size_t		end2	=	operand.mColStart[col+1];
+			row_t		start2	=	operand.mColStart[col];
+			row_t		end2	=	operand.mColStart[col+1];
 
-			for(size_t cnt2=start2;cnt2!=end2;++cnt2)
+			for(row_t cnt2=start2;cnt2!=end2;++cnt2)
 			{
 				result.setElem	(	mData[cnt].mRow,
 										vec[cnt2].mRow,
@@ -331,7 +331,7 @@ const MatrixCSR&		MatrixCSR::equal		(	const MatrixCSR&	operand	///< 피연산자
 		chkSameSize(operand);
 		copyElems(operand);
 	}
-	catch( ErrMsg*	exception	)
+	catch( ErrMsg*	)
 	{
 		freeElems();
 		allocElems(operand.getCol(), operand.getRow());
@@ -352,12 +352,12 @@ bool			MatrixCSR::compare			(	const MatrixCSR&	operand
 
 	if( getSize() == operand.getSize() )
 	{
-		for(size_t col=0;col<getCol();++col)
+		for(col_t col=0;col<getCol();++col)
 		{
-			size_t	start	=	mColStart[col];
-			size_t	end		=	mColStart[col+1];
+			row_t	start	=	mColStart[col];
+			row_t	end		=	mColStart[col+1];
 
-			for(size_t cnt=start;cnt<end;++cnt)
+			for(row_t cnt=start;cnt<end;++cnt)
 			{
 				elem_t	val		=	operand.getElem(col, mData[cnt].mRow);
 				if( mData[cnt].mData != val )
@@ -385,9 +385,9 @@ bool			MatrixCSR::compare			(	const MatrixCSR&	operand
  * 행렬 데이터 공간 할당
  * @exception		메모리 할당 실패 시 에러 발생
  */
-void		MatrixCSR::allocElems		(	size_t		col,	///< 행 크기
-												size_t		row		///< 열 크기
-											)
+void		MatrixCSR::allocElems		(	col_t		col,	///< 행 크기
+											row_t		row		///< 열 크기
+										)
 {
 	try
 	{
@@ -442,9 +442,9 @@ void		MatrixCSR::chkSameSize	(	const MatrixCSR&		matrix		///< 비교 할 행렬
  * 행렬 요소 참조 범위 검사
  * @exception		참조 범위 밖일 경우 예외 발생
  */
-void		MatrixCSR::chkBound		(	size_t		col,	///< 참조 할 행 위치
-											size_t		row		///< 참조 할 열 위치
-										) const
+void		MatrixCSR::chkBound		(	col_t		col,	///< 참조 할 행 위치
+										row_t		row		///< 참조 할 열 위치
+									) const
 {
 	if( ( col >= mCol ) ||
 		( row >= mRow ) )
