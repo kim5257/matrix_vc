@@ -13,6 +13,9 @@
 namespace	test
 {
 
+/**
+ * 생성자
+ */
 Test::Test			(	void	)
 {
 	matrixA		=	matrix_t(COL_SIZE, ROW_SIZE);
@@ -20,22 +23,34 @@ Test::Test			(	void	)
 	matrixB2	=	matrix_t(COL_SIZE, 1);;
 }
 
+/**
+ * 소멸자
+ */
 Test::~Test		(	void	)
 {
 
 }
 
+/**
+ * 시작 시간 측정
+ */
 void	Test::startMeasure	(	void	)
 {
 	mStartTime	=	clock();
 }
 
+/**
+ * 종료 시간 측정
+ */
 void	Test::endMeasure		(	void	)
 {
 	mEndTime	=	clock();
 	mDiffTime	=	mEndTime - mStartTime;
 }
 
+/**
+ * 시작 및 종료에 걸린 시간 계산 및 출력
+ */
 void	Test::ptrMeasure		(	void	)
 {
 	clock_t	sec		=	mDiffTime / CLOCKS_PER_SEC;
@@ -43,21 +58,31 @@ void	Test::ptrMeasure		(	void	)
 	printf("걸린시간 - %ld:%03ld\n\n", sec, msec);
 }
 
+/**
+ * 임의값 시드 초기화
+ */
 void	Test::initRandomVal		(	void	)
 {
 	srand((unsigned int)time(NULL));
 }
 
+/**
+ * 임의 값 추출
+ * @return	추출 한 임의 값
+ */
 matrix::elem_t
-		Test::getRandomVal		(	size_t		start,
-										size_t		end
-									)
+		Test::getRandomVal		(	size_t		start,	///< 임의 값 범위 시작
+									size_t		end		///< 임의 값 범위 끝
+								)
 {
 	matrix::elem_t	val		=	(matrix::elem_t)((rand() % (end - start + 1)) + start);
 
 	return	val;
 }
 
+/**
+ * 행렬 A, B1, B2에 임의의 데이터 입력
+ */
 void	Test::inpData			(	void	)
 {
 	printf("\n\n"
@@ -112,6 +137,9 @@ void	Test::inpData			(	void	)
 	ptrMeasure();
 }
 
+/**
+ * 행렬 A, B1, B2의 데이터 크기 출력
+ */
 void	Test::ptrDataSize		(	void	)
 {
 	printf("\n\n"
@@ -121,20 +149,17 @@ void	Test::ptrDataSize		(	void	)
 	printf("%-15s : %ld\n"
 			"%-15s : %ld\n"
 			"%-15s : %ld\n"
-			"%-15s : %ld\n"
-			"%-15s : %ld\n",
 			"matrixA",
 			matrixA.getSize(),
 			"matrixB1",
 			matrixB1.getSize(),
 			"matrixB2",
-			matrixB2.getSize(),
-			"matrixResult1",
-			matrixResult1.getSize(),
-			"matrixResult2",
-			matrixResult2.getSize());
+			matrixB2.getSize());
 }
 
+/**
+ * 대입 연산 시험
+ */
 void	Test::testEqual		(	void	)
 {
 	bool	flag	=	false;
@@ -196,6 +221,9 @@ void	Test::testEqual		(	void	)
 
 }
 
+/**
+ * 비교 연산 시험
+ */
 void	Test::testCompare		(	void	)
 {
 	bool	flag	=	false;
@@ -260,6 +288,9 @@ void	Test::testCompare		(	void	)
 
 }
 
+/**
+ * 덧셈 연산 시험
+ */
 void	Test::testAdd			(	void	)
 {
 	printf("\n\n"
@@ -313,6 +344,9 @@ void	Test::testAdd			(	void	)
 #endif
 }
 
+/**
+ * 뺄셈 연산 시험
+ */
 void	Test::testSub			(	void	)
 {
 	printf("\n\n"
@@ -368,6 +402,9 @@ void	Test::testSub			(	void	)
 
 }
 
+/**
+ * 곱셈 연산 시험
+ */
 void	Test::testMul			(	void	)
 {
 	printf("\n\n"
@@ -422,6 +459,9 @@ void	Test::testMul			(	void	)
 
 }
 
+/**
+ * 상수 곱셈 연산 시험
+ */
 void	Test::testElmMul		(	void	)
 {
 	printf("\n\n"
@@ -476,6 +516,9 @@ void	Test::testElmMul		(	void	)
 
 }
 
+/**
+ * 전치 행렬 곱셈 연산 시험
+ */
 void	Test::testTMul		(	void	)
 {
 	printf("\n\n"

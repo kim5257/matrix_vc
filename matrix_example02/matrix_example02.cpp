@@ -10,8 +10,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	try
 	{
-		matrix::MatrixCSR	matrixA	=	matrix::MatrixCSR(4,4);
-		matrix::MatrixCSR	matrixB	=	matrix::MatrixCSR(4,4);
+		matrix::MatrixCSR	matrixA	=	matrix::MatrixCSR(4,4);		// 4x4 A행렬 생성
+		matrix::MatrixCSR	matrixB	=	matrix::MatrixCSR(4,4);		// 4x4 B행렬 생성
 		matrix::MatrixCSR	matrixC;
 
 		// A 행렬 데이터 넣기
@@ -50,6 +50,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixB.setElem(3,2,2);
 		matrixB.setElem(3,3,1);
 
+		// A행렬 출력
 		printf("A = \n");
 		for(matrix::col_t col=0;col<matrixA.getCol();col++)
 		{
@@ -60,6 +61,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// B행렬 출력
 		printf("B = \n");
 		for(matrix::col_t col=0;col<matrixB.getCol();col++)
 		{
@@ -70,9 +72,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// C = A + B
 		matrixC	=	matrixA + matrixB;
 
-		printf("C = \n");
+		// C 행렬 출력
+		printf("C = A + B\n");
 		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
 			for(matrix::row_t row=0;row<matrixC.getRow();row++)
@@ -82,9 +86,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// C = A - B
 		matrixC	=	matrixA - matrixB;
 
-		printf("C = \n");
+		// C 행렬 출력
+		printf("C = A - B\n");
 		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
 			for(matrix::row_t row=0;row<matrixC.getRow();row++)
@@ -94,9 +100,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// C = A * B
 		matrixC	=	matrixA.multiply(matrixB);
 
-		printf("C = \n");
+		// C 행렬 출력
+		printf("C = A * B\n");
 		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
 			for(matrix::row_t row=0;row<matrixC.getRow();row++)
@@ -106,9 +114,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// C = A * 2
 		matrixC	=	matrixA.multiply(2);
 
-		printf("C = \n");
+		// C 행렬 출력
+		printf("C = A * 2\n");
 		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
 			for(matrix::row_t row=0;row<matrixC.getRow();row++)
@@ -118,9 +128,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("\n");
 		}
 
+		// C = (A 전치행렬) * 2
 		matrixC	=	matrixA.tmultiply(matrixB);
 
-		printf("C = \n");
+		// C 행렬 출력
+		printf("C = A.transpose() * B\n");
 		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
 			for(matrix::row_t row=0;row<matrixC.getRow();row++)

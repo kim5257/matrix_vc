@@ -10,16 +10,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		test::Test		test;
 
-		test.inpData();
-		test.ptrDataSize();
-		test.testCompare();
-		test.testEqual();
-		test.testAdd();
-		test.testSub();
-		test.testMul();
-		test.testElmMul();
-		test.testTMul();
-		//test.ptrDataSize();
+		test.inpData();			// 행렬 데이터 입력
+		test.ptrDataSize();		// 행렬 데이터 크기 출력
+		test.testCompare();		// 비교 연산 시험
+		test.testEqual();		// 대입 연산 시험
+		test.testAdd();			// 덧셈 연산 시험
+		test.testSub();			// 뺄셈 연산 시험
+		test.testMul();			// 곱셈 연산 시험
+		test.testElmMul();		// 상수 곱셈 연산 시험
+		test.testTMul();		// 전치 행렬 곱셈 연산 시험
 	}
 	catch( matrix::ErrMsg*	exception	)
 	{

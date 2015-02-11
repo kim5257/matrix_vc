@@ -17,18 +17,18 @@ namespace	test
 class	Test
 {
 private:
-	clock_t		mStartTime;
-	clock_t		mEndTime;
-	clock_t		mDiffTime;
+	clock_t		mStartTime;		///< 연산 시작 시간
+	clock_t		mEndTime;		///< 연산 종료 시간
+	clock_t		mDiffTime;		///< 시간 차
 private:
-	matrix_t		matrixA;
-	matrix_t		matrixB1;
-	matrix_t		matrixB2;
-	matrix_t		matrixResult1;
-	matrix_t		matrixResult2;
+	matrix_t	matrixA;		///< 행렬 A  ( N x N )
+	matrix_t	matrixB1;		///< 행렬 B1 ( N x N )
+	matrix_t	matrixB2;		///< 행렬 B2 ( N x 1 )
+	matrix_t	matrixResult1;	///< 결과 행렬1
+	matrix_t	matrixResult2;	///< 결과 행렬2
 public:
 				Test		(	void	);
-	virtual	~Test		(	void	);
+	virtual		~Test		(	void	);
 private:
 	void	startMeasure	(	void	);
 	void	endMeasure		(	void	);
@@ -39,13 +39,13 @@ private:
 								size_t		end
 							);
 public:
-	void	inpData		(	void	);
-	void	ptrDataSize	(	void	);
+	void	inpData			(	void	);
+	void	ptrDataSize		(	void	);
 	void	testEqual		(	void	);
-	void	testCompare	(	void	);
-	void	testAdd		(	void	);
-	void	testSub		(	void	);
-	void	testMul		(	void	);
+	void	testCompare		(	void	);
+	void	testAdd			(	void	);
+	void	testSub			(	void	);
+	void	testMul			(	void	);
 	void	testElmMul		(	void	);
 	void	testTMul		(	void	);
 };

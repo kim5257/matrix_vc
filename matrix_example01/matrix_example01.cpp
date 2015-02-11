@@ -9,8 +9,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	try
 	{
-		matrix::Matrix	matrixA	=	matrix::Matrix(4,4);
-		matrix::Matrix	matrixB	=	matrix::Matrix(4,4);
+		matrix::Matrix	matrixA	=	matrix::Matrix(4,4);		// 4x4 A행렬 생성
+		matrix::Matrix	matrixB	=	matrix::Matrix(4,4);		// 4x4 B행렬 생성
 		matrix::Matrix	matrixC;
 
 		// A 행렬 데이터 넣기
@@ -49,56 +49,92 @@ int _tmain(int argc, _TCHAR* argv[])
 		matrixB.setElem(3,2,2);
 		matrixB.setElem(3,3,1);
 
+		// A행렬 출력
 		printf("A = \n");
-		for(size_t col=0;col<matrixA.getCol();col++)
+		for(matrix::col_t col=0;col<matrixA.getCol();col++)
 		{
-			for(size_t row=0;row<matrixA.getRow();row++)
+			for(matrix::row_t row=0;row<matrixA.getRow();row++)
 			{
 				printf("%6.2f ", matrixA.getElem(col, row));
 			}
 			printf("\n");
 		}
 
+		// B행렬 출력
 		printf("B = \n");
-		for(size_t col=0;col<matrixB.getCol();col++)
+		for(matrix::col_t col=0;col<matrixB.getCol();col++)
 		{
-			for(size_t row=0;row<matrixB.getRow();row++)
+			for(matrix::row_t row=0;row<matrixB.getRow();row++)
 			{
 				printf("%6.2f ", matrixB.getElem(col, row));
 			}
 			printf("\n");
 		}
 
+		// C = A + B
 		matrixC	=	matrixA + matrixB;
 
-		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		// C 행렬 출력
+		printf("C = A + B\n");
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
 			printf("\n");
 		}
 
+		// C = A - B
 		matrixC	=	matrixA - matrixB;
 
-		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		// C 행렬 출력
+		printf("C = A - B\n");
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}
 			printf("\n");
 		}
 
-		matrixC	=	matrixA * matrixB;
+		// C = A * B
+		matrixC	=	matrixA.multiply(matrixB);
 
-		printf("C = \n");
-		for(size_t col=0;col<matrixC.getCol();col++)
+		// C 행렬 출력
+		printf("C = A * B\n");
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
 		{
-			for(size_t row=0;row<matrixC.getRow();row++)
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
+			{
+				printf("%6.2f ", matrixC.getElem(col, row));
+			}
+			printf("\n");
+		}
+
+		// C = A * 2
+		matrixC	=	matrixA.multiply(2);
+
+		// C 행렬 출력
+		printf("C = A * 2\n");
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
+		{
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
+			{
+				printf("%6.2f ", matrixC.getElem(col, row));
+			}
+			printf("\n");
+		}
+
+		// C = (A 전치행렬) * 2
+		matrixC	=	matrixA.transpose() * matrixB;
+
+		// C 행렬 출력
+		printf("C = A.transpose() * B\n");
+		for(matrix::col_t col=0;col<matrixC.getCol();col++)
+		{
+			for(matrix::row_t row=0;row<matrixC.getRow();row++)
 			{
 				printf("%6.2f ", matrixC.getElem(col, row));
 			}

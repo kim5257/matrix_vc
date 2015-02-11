@@ -682,6 +682,9 @@ void		SparseMatrix::copyElems		(	const SparseMatrix&		matrix		///< 복사 할 행렬
 	}
 }
 
+/**
+ * 쓰레드 행렬 데이터 복사
+ */
 void		SparseMatrix::pcopyElems		(	const SparseMatrix&		matrix		///< 복사 할 행렬
 											)
 {
@@ -709,7 +712,7 @@ void		SparseMatrix::pcopyElems		(	const SparseMatrix&		matrix		///< 복사 할 행렬
  * @exception		행렬이 같은 크기가 아닐 경우 예외 발생
  */
 void		SparseMatrix::chkSameSize	(	const SparseMatrix&		matrix		///< 비교 할 행렬
-											) const
+										) const
 {
 	if( ( getCol() != matrix.getCol() ) ||
 		( getRow() != matrix.getRow() ) )
@@ -723,8 +726,8 @@ void		SparseMatrix::chkSameSize	(	const SparseMatrix&		matrix		///< 비교 할 행렬
  * @exception		참조 범위 밖일 경우 예외 발생
  */
 void		SparseMatrix::chkBound		(	col_t		col,	///< 참조 할 행 위치
-												row_t		row		///< 참조 할 열 위치
-											) const
+											row_t		row		///< 참조 할 열 위치
+										) const
 {
 	if( ( col >= mCol ) ||
 		( row >= mRow ) )
@@ -733,9 +736,12 @@ void		SparseMatrix::chkBound		(	col_t		col,	///< 참조 할 행 위치
 	}
 }
 
-void		SparseMatrix::doThreadFunc	(	FuncKind		kind,
-												OpInfo&		info
-											) const
+/**
+ * 쓰레드 연산 시작
+ */
+void		SparseMatrix::doThreadFunc	(	FuncKind	kind,	///< 연산 종류
+											OpInfo&		info	///< 연산 참조 데이터
+										) const
 {
 	FuncInfo		orgFuncInfo	=	{info, NULL, 0, 0};
 	FuncInfo		funcInfo[THREAD_NUM];
@@ -861,9 +867,12 @@ void		SparseMatrix::doThreadFunc	(	FuncKind		kind,
 	}
 }
 
-void		SparseMatrix::doThreadFunc	(	FuncKind		kind,
-												OpInfo&		info
-											)
+/**
+ * 쓰레드 연산 시작
+ */
+void		SparseMatrix::doThreadFunc	(	FuncKind	kind,	///< 연산 종류
+											OpInfo&		info	///< 연산 참조 데이터
+										)
 {
 	FuncInfo		orgFuncInfo	=	{info, NULL, 0, 0};
 	FuncInfo		funcInfo[THREAD_NUM];
@@ -962,7 +971,7 @@ THREAD_RETURN_TYPE THREAD_FUNC_TYPE	SparseMatrix::threadAdd			(	void*	pData	)
 
 	const SparseMatrix&	operandA	=	*info->opInfo.operandA;
 	const SparseMatrix&	operandB	=	*info->opInfo.operandB;
-	SparseMatrix&			result		=	*info->opInfo.result;
+	SparseMatrix&		result		=	*info->opInfo.result;
 
 	vector_data_t*		nodeA		=	&operandA.mData[start];
 	vector_data_t*		nodeB		=	&operandB.mData[start];
@@ -1275,9 +1284,12 @@ THREAD_RETURN_TYPE THREAD_FUNC_TYPE	SparseMatrix::threadCompare		(	void*	pData	)
 	return	(THREAD_RETURN_TYPE)flag;
 }
 
-void		SparseMatrix::delElem_		(	vector_data_t*	data,
-											col_t			col,
-											row_t			row
+/**
+ * 행렬 데이터 제거
+ */
+void		SparseMatrix::delElem_		(	vector_data_t*	data,	///< vector 객체 배열
+											col_t			col,	///< 삭제 할 데이터 행
+											row_t			row		///< 삭제 할 데이터 열
 										)
 {
 	elem_vector_t&	vec		=	data[col].mVector;
@@ -1292,9 +1304,12 @@ void		SparseMatrix::delElem_		(	vector_data_t*	data,
 	}
 }
 
-elem_t		SparseMatrix::getElem_		(	vector_data_t*	data,
-											col_t			col,
-											row_t			row
+/**
+ * 행렬 데이터 참조
+ */
+elem_t		SparseMatrix::getElem_		(	vector_data_t*	data,	///< vector 객체 배열
+											col_t			col,	///< 참조 할 데이터 행
+											row_t			row		///< 참조 할 데이터 열
 										)
 {
 	elem_t				value	=	0;
@@ -1315,9 +1330,12 @@ elem_t		SparseMatrix::getElem_		(	vector_data_t*	data,
 	return	value;
 }
 
-void		SparseMatrix::setElem_		(	vector_data_t*	data,
-											col_t			col,
-											row_t			row,
+/**
+ * 행렬 데이터 설정
+ */
+void		SparseMatrix::setElem_		(	vector_data_t*	data,	///< vector 객체 배열
+											col_t			col,	///< 추가 할 데이터 행
+											row_t			row,	///< 추가 할 데이터 열
 											elem_t			elem
 										)
 {
